@@ -119,3 +119,20 @@ export const deleteClassDB = async (course_id) => {
     console.log(result[0])
     return result[0].affectedRows
 }
+
+export const getClassStudentListDB = async (course_id) => {
+    const result = await pool.query(`
+        SELECT 
+            s.student_id, s.email
+        FROM 
+            students s
+        INNER JOIN 
+            student_courses sc 
+        ON
+            s.student_id = sc.student_id
+        WHERE 
+            sc.course_id = ?`,[course_id]
+    )
+    console.log(result[0])
+    return result[0]
+}
