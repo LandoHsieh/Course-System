@@ -7,12 +7,12 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3000",
-            "description": "Deploy on localhost"
+            "url": "https://course-system.onrender.com",
+            "description": "Deploy on Render"
         },
         {
-            "url": "vercel",
-            "description": "Deploy on Vercel"
+            "url": "http://localhost:3000",
+            "description": "Deploy on localhost"
         }
     ],
     "paths": {
