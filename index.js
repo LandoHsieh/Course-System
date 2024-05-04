@@ -2,8 +2,19 @@ import express from 'express'
 import classRoutes from './routes/class.routes.js'
 import professorRoutes from './routes/professor.routes.js'
 import cors from 'cors'
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+import options from './src/swagger.json' assert {type: 'json'}
+
+
 const app = express()
 const PORT = 3000
+
+// swagger API
+options.apis = ["index.js"]
+const specs = swaggerJSDoc(options)
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs))
+
 
 app.use(express.json())
 app.use(cors())

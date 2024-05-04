@@ -129,7 +129,7 @@
                         "description": "Class created successfully"
                     },
                     "400": {
-                        "description": "Possible reasons: Incomplete information, Invalid time format.",
+                        "description": "Possible reasons: Incomplete information, Invalid time format."
                     },
                     "500": {
                         "description": "Internal Server Error"
