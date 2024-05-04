@@ -74,9 +74,7 @@ export const createClassDB = async (course_name, description, start_time, end_ti
     //檢查此professor是否存在
     let professorExist = false
     const checkProfessor = await pool.query(`SELECT 1 FROM professors WHERE professor_id = ?`, [professor_id])
-    if(checkProfessor[0].length > 0){
-        professorExist = true
-    }
+    if(checkProfessor[0].length > 0) professorExist = true
     if(!professorExist) {
         throw new Error("This professor ID doesn't exists")
     }
@@ -92,3 +90,24 @@ export const createClassDB = async (course_name, description, start_time, end_ti
 }
 
 // 更新課程內容
+export const updateClassDB = async (course_id, course_name, description, start_time, end_time, professor_id) => {
+    // 檢查課程是否存在
+    let classExist = false
+    const checkClass = await pool.query(`SELECT 1 FROM courses WHERE course_id = ?`, [course_id])
+    if(checkClass[0].length > 0) classExist = true
+    if (!classExist) throw new Error("This course ID doesn't exists.")
+    
+    const result = await pool.query(`
+        UPDATE 
+            courses
+        SET 
+            course_name = ?,
+            description = ?,
+            start_time = ?,
+            end_time = ?,
+            professor_id = ?
+        WHERE
+            course_id = ?
+    `, [course_name, description, start_time,end_time, professor_id, course_id])
+    return result[0]
+}

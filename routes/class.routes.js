@@ -10,4 +10,6 @@ router.get('/', getClassList)
 router.post('/', createClass)
 
 router.put('/', updateClass)
+
+router.delete('/:id')
 export default router
