@@ -18,6 +18,14 @@ export const createClass = async (req, res) => {
             return res.status(400).json({error: "Incomplete information."})
         }
 
+        // 正規表達式限制hhmm格式
+        const regex = /^\d{4}$/
+        if(!regex.test(start_time)){
+            return res.status(400).json({error: "Invalid start_time formate. Must be 'hhmm'"})
+        }else if(!regex.test(end_time)){
+            return res.status(400).json({ error: "Invalid end_time formate. Must be 'hhmm'" })
+        }
+
         //創建課程
         const result = await createClassDB(course_name, description, start_time, end_time, professor_id)
         return res.status(200).send(`Class create successfully. Class ID: ${result}`)
@@ -33,6 +41,15 @@ export const updateClass = async (req, res) => {
         if (!course_name || !description || !start_time || !end_time || !professor_id) {
             return res.status(400).json({ error: "Incomplete information." })
         }
+
+        // 正規表達式限制hhmm格式
+        const regex = /^\d{4}$/
+        if (!regex.test(start_time)) {
+            return res.status(400).json({ error: "Invalid start_time formate. Must be 'hhmm'" })
+        } else if (!regex.test(end_time)) {
+            return res.status(400).json({ error: "Invalid end_time formate. Must be 'hhmm'" })
+        }
+
         const result = await updateClassDB(course_id, course_name, description, start_time, end_time, professor_id)
         return res.status(200).send("Class update successfully.")
     }catch(err) {
