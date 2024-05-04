@@ -1,4 +1,4 @@
-import { createClassDB, getClassListDB, updateClassDB } from "../database/connectToDB.js"
+import { createClassDB, deleteClassDB, getClassListDB, updateClassDB } from "../database/connectToDB.js"
 
 export const getClassList = async (req, res) => {
     try {
@@ -17,8 +17,10 @@ export const createClass = async (req, res) => {
         if(!course_name || !description || !start_time || !end_time || !professor_id){
             return res.status(400).json({error: "Incomplete information."})
         }
+
+        //創建課程
         const result = await createClassDB(course_name, description, start_time, end_time, professor_id)
-        return res.status(200).send("Class create successfully.")
+        return res.status(200).send(`Class create successfully. Class ID: ${result}`)
     }catch(err){
         console.log('Error in createClass controller: ', err)
         return res.status(500).json({ Error: "This professor ID doesn't exists"})
@@ -41,8 +43,13 @@ export const updateClass = async (req, res) => {
 
 export const deleteClass = async (req, res) => {
     try {
-        
+        const {id} = req.params
+        if (!id) return res.status(400).json({ error: "No course ID selected." })
+        const result = await deleteClassDB(id)
+        if(result > 0) return res.status(200).send("Course delete successfully.")
+        return res.status(200).send("No course deleted.")
     }catch(err){
-
+        console.log('Error in deleteClass controller: ', err)
+        return res.status(500).json(err)
     }
 }

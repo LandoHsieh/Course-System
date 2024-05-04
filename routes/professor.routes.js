@@ -13,6 +13,4 @@ router.get('/', getProfessorList)
 router.get('/class', getProfessorClassList)
 
 
-
-
 export default router

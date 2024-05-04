@@ -1,0 +1,363 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Course System API",
+        "version": "1.0.0",
+        "description": "此為三宏科技股份有限公司面試題目-選課系統OpenAPI"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Deploy on localhost"
+        },
+        {
+            "url": "vercel",
+            "description": "Deploy on Vercel"
+        }
+    ],
+    "paths": {
+        "/api/1.0/class": {
+            "get": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Get list of classes",
+                "operationId": "getClassList",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of class list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "course_id": {
+                                                "type": "integer",
+                                                "format": "int64",
+                                                "example": 1
+                                            },
+                                            "course_name": {
+                                                "type": "string",
+                                                "example": "Introduction to Computer Science"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "An introductory course to the fundamentals of computer science"
+                                            },
+                                            "start_time": {
+                                                "type": "string",
+                                                "example": "0900"
+                                            },
+                                            "end_time": {
+                                                "type": "string",
+                                                "example": "1040"
+                                            },
+                                            "professor_id": {
+                                                "type": "integer",
+                                                "format": "int64",
+                                                "example": 1
+                                            },
+                                            "professor_name": {
+                                                "type": "string",
+                                                "example": "John Doe"
+                                            },
+                                            "professor_email": {
+                                                "type": "string",
+                                                "example": "john.doe@example.com"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Create a new class",
+                "description": "professor_id 必須要是已存在資料庫的",
+                "operationId": "createClass",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "course_name",
+                                    "description",
+                                    "start_time",
+                                    "end_time",
+                                    "professor_id"
+                                ],
+                                "properties": {
+                                    "course_name": {
+                                        "type": "string",
+                                        "example": "Web Development Fundamentals"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "An introductory course focusing on the basics of web development, including HTML, CSS, and JavaScript."
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "example": "1000"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "example": "1100"
+                                    },
+                                    "professor_id": {
+                                        "type": "string",
+                                        "example": "3"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Class created successfully"
+                    },
+                    "400": {
+                        "description": "Incomplete information"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Update an existing class",
+                "description": "更新課程資訊，request body必須完整",
+                "operationId": "updateClass",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "course_id",
+                                    "course_name",
+                                    "description",
+                                    "start_time",
+                                    "end_time",
+                                    "professor_id"
+                                ],
+                                "properties": {
+                                    "course_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "course_name": {
+                                        "type": "string",
+                                        "example": "Introduction to Computer Science"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "An introductory course to the fundamentals of computer science"
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "example": "0720"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "example": "0920"
+                                    },
+                                    "professor_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Class updated successfully"
+                    },
+                    "400": {
+                        "description": "Incomplete information"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/1.0/class/{id}": {
+            "delete": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Delete a class",
+                "operationId": "deleteClass",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The ID of the class to delete"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Class deleted successfully or no class to delete"
+                    },
+                    "400": {
+                        "description": "No course ID selected"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/1.0/professor": {
+            "get": {
+                "tags": [
+                    "Professor"
+                ],
+                "summary": "Get list of professors",
+                "operationId": "getProfessorList",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of professor list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Professor"
+                ],
+                "summary": "Create a new professor",
+                "description": "新增Professor, Email不得重複",
+                "operationId": "createProfessor",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Professor created successfully"
+                    },
+                    "400": {
+                        "description": "Missing professor name or email"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/1.0/professor/class": {
+            "get": {
+                "tags": [
+                    "Professor"
+                ],
+                "summary": "Get class list for a specific professor",
+                "operationId": "getProfessorClassList",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Name of the professor to filter class list"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of class list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "course_name": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "start_time": {
+                                                "type": "string"
+                                            },
+                                            "end_time": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}

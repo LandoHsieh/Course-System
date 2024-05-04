@@ -31,7 +31,7 @@ export const createProfessor = async (req, res) => {
             return res.status(400).send('No professor email.')
         }
         const result = await createProfessorDB(name, email)
-        return res.status(200).send('Professor create successfully.')
+        return res.status(200).send(`Professor create successfully. Professor ID: ${result}`)
     }catch(err){
         console.log("Error in createProfessor controller: ", err)
         return res.status(500).json({ error: "Internal Server Error." })

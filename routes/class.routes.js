@@ -1,5 +1,5 @@
 import express from 'express'
-import { createClass, getClassList, updateClass } from '../controllers/class.controller.js'
+import { createClass, deleteClass, getClassList, updateClass } from '../controllers/class.controller.js'
 
 const router = express.Router()
 
@@ -11,5 +11,6 @@ router.post('/', createClass)
 
 router.put('/', updateClass)
 
-router.delete('/:id')
+router.delete('/:id', deleteClass)
+
 export default router
