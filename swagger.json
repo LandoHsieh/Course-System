@@ -129,7 +129,7 @@
                         "description": "Class created successfully"
                     },
                     "400": {
-                        "description": "Incomplete information"
+                        "description": "Possible reasons: Incomplete information, Invalid time format.",
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -192,7 +192,7 @@
                         "description": "Class updated successfully"
                     },
                     "400": {
-                        "description": "Incomplete information"
+                        "description": "Possible reasons: Incomplete information, Invalid time format."
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -318,7 +318,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -342,10 +342,60 @@
                                                 "type": "string"
                                             },
                                             "start_time": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "format": "date-time"
                                             },
                                             "end_time": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/1.0/professor/class/studentList": {
+            "get": {
+                "tags": [
+                    "Professor"
+                ],
+                "summary": "Get list of students who chose the course.",
+                "operationId": "getClassStudentList",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The ID of the class to search"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of student list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "student_id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "student1@example.com"
                                             }
                                         }
                                     }
