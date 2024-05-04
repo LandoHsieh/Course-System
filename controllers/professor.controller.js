@@ -1,4 +1,4 @@
-import { createProfessorDB, getProfessorClassListDB, getProfessorListDB } from "../database/connectToDB.js"
+import { createProfessorDB, getClassStudentListDB, getProfessorClassListDB, getProfessorListDB } from "../database/connectToDB.js"
 
 export const getProfessorList = async (req, res) => {
     try {
@@ -36,5 +36,17 @@ export const createProfessor = async (req, res) => {
         console.log("Error in createProfessor controller: ", err)
         return res.status(500).json({ error: "Internal Server Error." })
     }
-    
 }
+
+// 取得指定課程的學生清單
+export const getClassStudentList = async (req, res) => {
+    const courseId = req.query.courseId
+    try {
+        const studentList = await getClassStudentListDB(courseId)
+        return res.status(200).json(studentList)
+    }catch(err){
+        console.log("Error in getClassStudentList controller: ", err)
+        return res.status(500).json({ error: "Internal Server Error." })
+    }
+}
+
