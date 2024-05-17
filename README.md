@@ -1,5 +1,4 @@
 # Course-System  
-## 三宏科技股份有限公司筆試  
 ### This project has been deployed to the Render (it may take 50 seconds to load the page for the first time).  
 https://course-system.onrender.com/docs
 ## Installation  
